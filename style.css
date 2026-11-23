@@ -425,7 +425,7 @@ body {
 }
 
 /* =========================================================
-   KONTROL MOBILE & TAMPILAN RESPONSIF HP (POTRET & LANSKAP)
+   KONTROL MOBILE & TAMPILAN RESPONSIF HP (DIKUNCI KE PINGGIR KIRI ATAS)
    ========================================================= */
 #mobile-controls {
     display: none;
@@ -460,16 +460,15 @@ body {
         font-size: 9px !important;
     }
 
-    /* Panel kanan dibatasi tingginya & bisa di-scroll agar tidak menabrak JUMP */
     #action-panel {
-        top: 52px !important;
-        right: 8px !important;
+        top: 50px !important;
+        right: 6px !important;
         left: auto !important;
-        width: 135px !important;
-        max-height: calc(100vh - 140px) !important;
+        width: 125px !important;
+        max-height: calc(100vh - 130px) !important;
         overflow-y: auto !important;
-        padding: 7px !important;
-        gap: 5px !important;
+        padding: 6px !important;
+        gap: 4px !important;
     }
 
     #action-panel .label {
@@ -477,109 +476,24 @@ body {
     }
 
     #action-panel .btn-toggle {
-        padding: 5px !important;
-        font-size: 9px !important;
+        padding: 4px !important;
+        font-size: 8px !important;
     }
 
     .emote-grid button {
-        padding: 4px !important;
-        font-size: 9px !important;
+        padding: 3px !important;
+        font-size: 8px !important;
     }
 
-    /* Kotak chat ringkas di pojok kiri atas agar tidak menutupi tengah layar */
+    /* KOTAK CHAT DIPINDAHKAN KE PINGGIR KIRI ATAS & DIPERKECIL */
     #chat-container {
         position: fixed !important;
-        top: 52px !important;
-        left: 8px !important;
+        top: 50px !important;
+        left: 6px !important;
         right: auto !important;
         bottom: auto !important;
         transform: none !important;
-        width: 230px !important;
-        max-width: 45vw !important;
-        padding: 6px !important;
-        background: rgba(15, 23, 42, 0.82) !important;
-    }
-
-    #chat-messages {
-        height: 44px !important;
-        font-size: 10px !important;
-        margin-bottom: 4px !important;
-    }
-
-    #chat-input {
-        padding: 4px 7px !important;
-        font-size: 10px !important;
-    }
-
-    #interact-prompt {
-        bottom: 90px !important;
-        padding: 5px 12px !important;
-        font-size: 11px !important;
-    }
-}
-
-#dpad {
-    position: absolute;
-    bottom: 14px;
-    left: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3px;
-    pointer-events: auto;
-}
-
-.dpad-mid {
-    display: flex;
-    gap: 34px;
-}
-
-.m-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: rgba(15, 23, 42, 0.72);
-    backdrop-filter: blur(4px);
-    border: 2px solid rgba(255, 255, 255, 0.35);
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    touch-action: none;
-}
-
-.m-btn:active {
-    background: rgba(56, 189, 248, 0.85);
-    transform: scale(0.92);
-}
-
-#mobile-actions {
-    position: absolute;
-    bottom: 16px;
-    right: 16px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    pointer-events: auto;
-}
-
-.m-action-btn {
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
-    background: rgba(37, 99, 235, 0.85);
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    color: white;
-    font-weight: 800;
-    font-size: 11px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
-    touch-action: none;
-}
-
-#m-btn-interact {
-    background: rgba(16, 185, 129, 0.9);
-    font-size: 16px;
-}
-
-#m-btn-interact.hidden {
-    display: none;
-}
+        width: 185px !important;
+        max-width: 42vw !important;
+        padding: 5px !important;
+        background: rgba(15, 23, 42, 0.82
