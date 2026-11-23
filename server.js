@@ -1,4 +1,3 @@
-// Server multiplayer BISPRO LIFE. Jalankan: npm install && npm start
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -60,7 +59,6 @@ io.on('connection', socket => {
         socket.broadcast.emit('outfit', { id: p.id, color: p.color, formal: p.formal });
     });
 
-    // Relay WebRTC Voice Chat antar pemain
     socket.on('voice-signal', d => {
         if (!d || !d.to) return;
         io.to(d.to).emit('voice-signal', { from: socket.id, signal: d.signal });
