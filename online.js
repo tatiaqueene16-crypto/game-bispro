@@ -1,7 +1,3 @@
-// =========================================================
-// ONLINE: login, multiplayer, bubble chat, kostum pribadi, admin
-// (dimuat setelah main.js)
-// =========================================================
 (function () {
     'use strict';
     const PALETTE = [0x0ea5e9, 0xef4444, 0x22c55e, 0xf59e0b, 0x8b5cf6, 0xec4899, 0x14b8a6, 0x1e293b];
@@ -20,7 +16,6 @@
     const $ = id => document.getElementById(id);
     const hash = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
 
-    // ---------- dunia kosong: tanpa NPC, hanya pemain asli ----------
     npcAvatars.splice(0).forEach(n => scene.remove(n));
 
     const toastCss = document.createElement('style');
@@ -39,6 +34,7 @@
 
     function renderRoster(users) {
         const list = $('roster-list');
+        if (!list) return;
         list.innerHTML = '';
         const hd = document.querySelector('#roster-panel .panel-header h3');
         if (hd) hd.textContent = 'Players Online (' + users.length + ')';
@@ -97,7 +93,6 @@
         u.formalParts.forEach(p => p.visible = o.formal);
     }
 
-    // ---------- bubble chat (2 menit) ----------
     function showBubble(av, text) {
         const u = av.userData;
         clearBubble(av);
@@ -141,7 +136,6 @@
         box.appendChild(d); box.scrollTop = box.scrollHeight;
     }
 
-    // ---------- chat, emote, kostum (pribadi) ----------
     function sendChat(msg) {
         if (socket && socket.connected) socket.emit('chat', msg);
         else { chatLine(myName, msg, isAdmin); showBubble(player, msg); }
@@ -152,13 +146,11 @@
         if (!msg) return;
         input.value = ''; input.blur();
         sendChat(msg);
-        if (nearbyTarget) {
+        if (typeof nearbyTarget !== 'undefined' && nearbyTarget) {
             const t = nearbyTarget;
             setTimeout(() => {
                 const reply = `Let's practice ${t.skills[0]} at ${t.zone}!`;
                 chatLine(t.name, reply, false);
-                const npc = npcAvatars.find(n => n.children.some(c => c.userData === t));
-                if (npc) showBubble(npc, reply);
             }, 600);
         }
     };
@@ -189,7 +181,6 @@
         $('btn-outfit').parentNode.appendChild(wrap);
     }
 
-    // ---------- pemain lain ----------
     function addRemote(p) {
         if (remotes.has(p.id)) return;
         const av = makeAvatar(p.name, p.admin);
@@ -225,7 +216,6 @@
         socket.emit('state', { x: r2(player.position.x), z: r2(player.position.z), ry: r2(player.rotation.y), mv: !!player.userData.moving, j: r2(player.userData.jumpY || 0) });
     });
 
-    // ---------- UI: login ----------
     const css = document.createElement('style');
     css.textContent = `
     #login-screen{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:rgba(15,23,42,.72);backdrop-filter:blur(6px)}
@@ -233,9 +223,7 @@
     .login-card h1{font-size:22px;color:#1e3a8a;margin-bottom:4px}
     .login-card p{font-size:13px;color:#64748b;margin-bottom:14px}
     .login-card input{width:100%;padding:11px 12px;margin-bottom:10px;border:1px solid #cbd5e1;border-radius:10px;font-size:14px;outline:none}
-    .login-card input:disabled{background:#f1f5f9;color:#475569}
     .login-card button{width:100%;padding:11px;border:none;border-radius:10px;background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;font-weight:700;font-size:14px;cursor:pointer}
-    #admin-toggle{display:inline-block;margin-top:12px;font-size:12px;color:#2563eb;cursor:pointer;text-decoration:underline}
     #login-err{color:#dc2626;font-size:12px;min-height:16px;margin-top:8px}
     .swatches{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
     .swatch{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.6);cursor:pointer;padding:0}
@@ -282,10 +270,9 @@
         scene.add(av);
         me.color = av.userData.defaultColor; me.formal = false;
         buildSwatches();
-        addSystemMessage(`Welcome, ${myName}${isAdmin ? ' (Admin)' : ''}!` + (socket ? '' : ' (solo mode)'));
+        addSystemMessage(`Welcome, ${myName}!` + (socket ? '' : ' (solo mode)'));
         (info.players || []).forEach(addRemote);
         renderRoster([{ id: myId, name: myName }].concat((info.players || []).map(q => ({ id: q.id, name: q.name }))));
-        if (!(info.players || []).length) addSystemMessage('You are the only one online right now.');
         if (socket) {
             pushOutfit();
             socket.on('join', p => { addRemote(p); addSystemMessage(`${p.name} joined the campus.`); toast('🟢 ' + p.name + ' joined', '#16a34a'); });
@@ -299,12 +286,10 @@
             });
             socket.on('emote', d => { const r = remotes.get(d.id); if (r) r.av.userData.emote = { type: d.type, t: 0 }; });
             socket.on('outfit', d => { const r = remotes.get(d.id); if (r) applyOutfit(r.av, d); });
-            socket.on('kicked', () => { alert('You were removed by the admin.'); location.reload(); });
             socket.on('disconnect', () => addSystemMessage('Disconnected from server.'));
         }
     }
 
-    // ---------- Logika Touch Kontrol Mobile ----------
     document.querySelectorAll('.m-btn, .m-action-btn[data-key]').forEach(btn => {
         const k = btn.getAttribute('data-key');
         const press = e => { e.preventDefault(); keys[k] = true; };
@@ -318,16 +303,15 @@
     if (mInteract) {
         mInteract.addEventListener('touchstart', e => {
             e.preventDefault();
-            if (nearbyTarget) openStudentModal(nearbyTarget);
+            if (typeof nearbyTarget !== 'undefined' && nearbyTarget) openStudentModal(nearbyTarget);
         }, { passive: false });
 
         window.frameHooks.push(() => {
-            if (nearbyTarget) mInteract.classList.remove('hidden');
+            if (typeof nearbyTarget !== 'undefined' && nearbyTarget) mInteract.classList.remove('hidden');
             else mInteract.classList.add('hidden');
         });
     }
 
-    // ---------- Logika Voice Chat (WebRTC) ----------
     let localStream = null;
     let micEnabled = false;
     const peers = new Map();
@@ -377,7 +361,7 @@
     if (btnMic) {
         btnMic.onclick = async () => {
             if (!socket) {
-                addSystemMessage('Voice chat membutuhkan server multiplayer aktif.');
+                addSystemMessage('Voice chat membutuhkan server multiplayer.');
                 return;
             }
             if (!micEnabled) {
