@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BISPRO LIFE – University Simulator 3D</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div id="canvas-container"></div>
+
+    <div id="top-bar">
+        <div class="game-title">🎓 BISPRO LIFE: UNIVERSITY SIMULATOR</div>
+        <div id="zone-nav"></div>
+    </div>
+
+    <div id="roster-panel">
+        <div class="panel-header">
+            <h3>BISPRO Squad (19)</h3>
+            <span class="online-badge">● Online</span>
+        </div>
+        <ul id="roster-list"></ul>
+    </div>
+
+    <div id="action-panel">
+        <div class="control-group">
+            <span class="label">WARDROBE</span>
+            <button id="btn-outfit" class="btn-toggle">👔 Switch to Formal Suit</button>
+        </div>
+        <div class="control-group">
+            <span class="label">EMOTES</span>
+            <div class="emote-grid">
+                <button onclick="triggerEmote('wave')">👋 Wave</button>
+                <button onclick="triggerEmote('present')">🎤 Pitch</button>
+                <button onclick="triggerEmote('cheer')">🎉 Cheer</button>
+                <button onclick="triggerEmote('nod')">🤝 Agree</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <span class="label">VOICE CHAT</span>
+            <button id="btn-mic" class="btn-toggle" style="background: #ef4444;">🎤 Mic: OFF</button>
+        </div>
+    </div>
+
+    <div id="interact-prompt" class="hidden">
+        <span class="key-badge">E</span> <span id="prompt-text">Interact</span>
+    </div>
+
+    <div id="chat-container">
+        <div id="chat-messages">
+            <div class="sys-msg">Walk: WASD | Look: drag mouse | Zoom: scroll | Jump: Space | Talk: [E] near friends.</div>
+        </div>
+        <form id="chat-form">
+            <input type="text" id="chat-input" placeholder="Type message & press Enter..." maxlength="80" autocomplete="off">
+        </form>
+    </div>
+
+    <div id="info-modal" class="hidden">
+        <div class="modal-card">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <div class="modal-header">
+                <div id="modal-avatar" class="avatar-circle">B</div>
+                <div>
+                    <h2 id="modal-title">Student Name</h2>
+                    <span id="modal-subtitle" class="role-badge">Role / Zone</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p id="modal-desc">Description...</p>
+                <div id="modal-tags" class="tags-wrap"></div>
+                <div id="modal-quote" class="quote-box"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-action-btn" class="btn-primary">🔊 Listen to Greeting</button>
+                <button class="btn-secondary" onclick="closeModal()">Close (Esc)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kontrol Tombol Sentuh Mobile -->
+    <div id="mobile-controls">
+        <div id="dpad">
+            <button class="m-btn" data-key="w">▲</button>
+            <div class="dpad-mid">
+                <button class="m-btn" data-key="a">◀</button>
+                <button class="m-btn" data-key="d">▶</button>
+            </div>
+            <button class="m-btn" data-key="s">▼</button>
+        </div>
+        <div id="mobile-actions">
+            <button id="m-btn-interact" class="m-action-btn hidden">E</button>
+            <button class="m-action-btn" data-key=" ">JUMP</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="visuals.js"></script>
+    <script src="online.js"></script>
+</body>
+</html>
