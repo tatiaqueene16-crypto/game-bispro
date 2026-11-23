@@ -424,7 +424,9 @@ body {
     cursor: pointer;
 }
 
-/* Styling Kontrol Mobile */
+/* =========================================================
+   KONTROL MOBILE & TAMPILAN RESPONSIF HP (ANDROID / IOS)
+   ========================================================= */
 #mobile-controls {
     display: none;
     position: fixed;
@@ -437,87 +439,144 @@ body {
     #mobile-controls {
         display: block;
     }
-    #chat-container {
-        bottom: auto;
-        top: 85px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 240px;
-    }
-    #chat-messages {
-        height: 45px;
-    }
+
+    /* Sembunyikan panel daftar pemain agar layar HP tidak penuh sesak */
     #roster-panel {
-        width: 155px;
-        max-height: 36vh;
-        top: 85px;
+        display: none;
     }
+
+    /* Rampingkan panel aksi & tombol Mic di pojok kanan atas */
     #action-panel {
-        width: 155px;
-        top: 85px;
+        top: 68px;
+        right: 8px;
+        width: 135px;
+        padding: 8px;
+        gap: 6px;
+    }
+
+    #action-panel .label {
+        font-size: 9px;
+    }
+
+    #action-panel .btn-toggle {
+        padding: 5px;
+        font-size: 10px;
+    }
+
+    .emote-grid button {
+        padding: 4px;
+        font-size: 10px;
+    }
+
+    /* Bar judul & zona di atas agar muat di layar HP */
+    #top-bar {
+        top: 6px;
+        width: 98%;
+        gap: 4px;
+    }
+
+    .game-title {
+        font-size: 10px;
+        padding: 3px 10px;
+    }
+
+    .zone-btn {
+        padding: 3px 6px;
+        font-size: 9px;
+    }
+
+    /* Posisikan chat di bagian bawah layar tepat di atas D-Pad & Jump */
+    #chat-container {
+        position: fixed;
+        bottom: 165px;
+        left: 10px;
+        right: 10px;
+        top: auto;
+        transform: none;
+        width: auto;
+        max-width: none;
+        padding: 8px;
+        background: rgba(15, 23, 42, 0.88);
+    }
+
+    #chat-messages {
+        height: 48px;
+        font-size: 11px;
+        margin-bottom: 6px;
+    }
+
+    #chat-input {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+
+    #interact-prompt {
+        bottom: 265px;
+        padding: 6px 14px;
+        font-size: 12px;
     }
 }
 
 #dpad {
     position: absolute;
-    bottom: 24px;
-    left: 24px;
+    bottom: 18px;
+    left: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     pointer-events: auto;
 }
 
 .dpad-mid {
     display: flex;
-    gap: 44px;
+    gap: 38px;
 }
 
 .m-btn {
-    width: 52px;
-    height: 52px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    background: rgba(15, 23, 42, 0.65);
+    background: rgba(15, 23, 42, 0.72);
     backdrop-filter: blur(4px);
     border: 2px solid rgba(255, 255, 255, 0.35);
     color: white;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     touch-action: none;
 }
 
 .m-btn:active {
-    background: rgba(56, 189, 248, 0.8);
+    background: rgba(56, 189, 248, 0.85);
     transform: scale(0.92);
 }
 
 #mobile-actions {
     position: absolute;
-    bottom: 32px;
-    right: 24px;
+    bottom: 26px;
+    right: 18px;
     display: flex;
-    gap: 12px;
+    gap: 10px;
     align-items: center;
     pointer-events: auto;
 }
 
 .m-action-btn {
-    width: 64px;
-    height: 64px;
+    width: 58px;
+    height: 58px;
     border-radius: 50%;
-    background: rgba(37, 99, 235, 0.78);
+    background: rgba(37, 99, 235, 0.82);
     border: 2px solid rgba(255, 255, 255, 0.5);
     color: white;
     font-weight: 800;
-    font-size: 13px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
     touch-action: none;
 }
 
 #m-btn-interact {
-    background: rgba(16, 185, 129, 0.88);
-    font-size: 20px;
+    background: rgba(16, 185, 129, 0.9);
+    font-size: 18px;
 }
 
 #m-btn-interact.hidden {
